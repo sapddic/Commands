@@ -1,6 +1,7 @@
 ###  HANA SQL commands
 
 ```sql
+
 --HDB Connect
 
 hdbsql -i 00 -u SYSTEM -p Wedv84u$ -n sapvhgwxdb:30013  
