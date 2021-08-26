@@ -4,5 +4,5 @@
 
 
 
-![image-20210826154825105](C:\RKOTHAPALLI\Git\Commands\TMS.assets\image-20210826154825105.png)
+<img src="C:\RKOTHAPALLI\Git\Commands\TMS.assets\image-20210826155614856.png" alt="image-20210826155614856" style="zoom:33%;" />
 
