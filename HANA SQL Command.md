@@ -151,14 +151,14 @@ hdbsql -i 00 -u SAPECC -p D$n314Zz$ECD -n sapvhecddb:30041
 
 ```
 
-##### Basic Commands
+### Basic Commands
 
 ```sql
 SELECT * FROM "SYS"."SCHEMAS";
 select * from "SYS"."M_DATABASES"
 ```
 
-##### hdbuserstore Commands
+### hdbuserstore Commands
 
 ```sql
 # HANA Cleaner 
@@ -181,7 +181,7 @@ python /usr/sap/HDQ/HDB00/exe/python_support/hanacleaner.py -bd 20 -br true -bb 
 
 
 
-##### Reset Users
+### Reset Users
 
 ```sql
 #Reset the SYSTEM User Password of a Tenant Database
@@ -193,14 +193,14 @@ ALTER DATABASE <database_name> SYSTEM USER PASSWORD <new_password>
 /usr/sap/<SID>/HDB<instance>/exe/hdbnameserver -resetUserSystem
 ```
 
-##### Disable Password
+### Disable Password
 
 ```sql
 ALTER DATABASE <SID> <USER> USER PASSWORD <password>
 ALTER USER <technical-user-name> DISABLE PASSWORD LIFETIME
 ```
 
-##### Activate User(s)
+### Activate User(s)
 
 ```sql
 Select USER_NAME ,
@@ -223,7 +223,7 @@ GRANT BACKUP ADMIN, DATABASE BACKUP ADMIN, DATABASE RECOVERY OPERATOR, CATALOG R
 GRANT BACKUP ADMIN, DATABASE BACKUP ADMIN, CATALOG READ, INIFILE ADMIN TO <backup_user>;
 ```
 
-#####  STOP & Drop Databases:
+###  STOP & Drop Databases:
 
 ```sql
 -- DROP TENANT DATABASE
