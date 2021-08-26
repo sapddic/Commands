@@ -74,23 +74,7 @@ RECOVER DATABASE FOR BDR UNTIL TIMESTAMP '2021-07-14 17:50:51' USING CATALOG PAT
 	
 	
 
-# HANA Cleaner 
 
-update backup user with system & object priv
-
-hdbsql -i 00 -u SYSTEM -p Wedv84u$ -n localhost:30013
-hdbuserstore set CLNR_BACKUP_USER SAPVHGWQDB:30013 BACKUP_USER Wedv84u$
-hdbuserstore set CLNSYSDB SAPVHBDRDB1:30013 SYSTEM Wedv84u$
-
-hdbuserstore set DEFAULT SAPVHECPDB1:30013 SAPECC D$n314Zz$ECP ECP
-
-hdbuserstore -u leprino-local\ECPadm Set DEFAULT SAPVHECPDB1:30013@ECP SAPECC D$n314Zz$ECP
-hdbuserstore -u leprino-local\SAPServiceECP Set DEFAULT SAPVHECPDB1:30013@ECP SAPECC D$n314Zz$ECP
-
-
-C:\Users\ecpadm>hdbuserstore list
-
-python /usr/sap/HDQ/HDB00/exe/python_support/hanacleaner.py -bd 20 -br true -bb true -k CLNR_BACKUP_USER -op /backup/TEST_DIR
 
 
 
@@ -153,8 +137,72 @@ ALTER SYSTEM ALTER CONFIGURATION ('indexserver.ini', 'SYSTEM') SET ('hex', 'enab
 ALTER SYSTEM ALTER CONFIGURATION ('global.ini','SYSTEM') SET ('inifile_checker','replicate') = 'true' WITH RECONFIGURE;
 ALTER SYSTEM ALTER CONFIGURATION ('indexserver.ini', 'SYSTEM') SET ('global', 'timezone_default_data_schema_name') = 'SAPECC' WITH RECONFIGURE;
 ALTER SYSTEM ALTER CONFIGURATION ('indexserver.ini', 'SYSTEM') SET ('global', 'timezone_default_data_client_name') = '100' WITH RECONFIGURE;
+```
 
 
+
+
+
+##### HDBSQL
+
+```sql
+hdbsql -i 00 -u <user> -p <password> -n <host>:<indexserverport>
+hdbsql -i 00 -u SAPECC -p D$n314Zz$ECD -n sapvhecddb:30041
+
+```
+
+##### Basic Commands
+
+```sql
+SELECT * FROM "SYS"."SCHEMAS";
+select * from "SYS"."M_DATABASES"
+```
+
+##### hdbuserstore Commands
+
+```sql
+# HANA Cleaner 
+
+update backup user with system & object priv
+
+hdbuserstore SET <KEY> <host:port> <USERNAME> <PASSWORD>
+hdbuserstore set <tagconn-CLNR_BACKUP_USER> SAPVHGWQDB:30013 BACKUP_USER Wedv84u$
+hdbuserstore set <tagconn-CLNSYSDB> SAPVHBDRDB1:30013 SYSTEM Wedv84u$
+hdbuserstore set DEFAULT SAPVHECPDB1:30013 SAPECC D$n314Zz$ECP ECP
+
+hdbuserstore SET <KEY> <host:port@tenant_database> <USERNAME> <PASSWORD>
+hdbuserstore -u leprino-local\ECPadm Set DEFAULT SAPVHECPDB1:30013@ECP SAPECC D$n314Zz$ECP
+hdbuserstore -u leprino-local\SAPServiceECP Set DEFAULT SAPVHECPDB1:30013@ECP SAPECC D$n314Zz$ECP
+
+
+# HANA Cleaner command :
+python /usr/sap/HDQ/HDB00/exe/python_support/hanacleaner.py -bd 20 -br true -bb true -k CLNR_BACKUP_USER -op /backup/TEST_DIR
+```
+
+
+
+##### Reset Users
+
+```sql
+#Reset the SYSTEM User Password of a Tenant Database
+ALTER SYSTEM STOP DATABASE <database_name>
+ALTER DATABASE <database_name> SYSTEM USER PASSWORD <new_password>
+
+#Reset the SYSTEM User Password of the System Database
+/usr/sap/<SID>/HDB<instance>/hdbenv.sh
+/usr/sap/<SID>/HDB<instance>/exe/hdbnameserver -resetUserSystem
+```
+
+##### Disable Password
+
+```sql
+ALTER DATABASE <SID> <USER> USER PASSWORD <password>
+ALTER USER <technical-user-name> DISABLE PASSWORD LIFETIME
+```
+
+##### Activate User(s)
+
+```sql
 Select USER_NAME ,
        VALID_FROM,
        VALID_UNTIL,
@@ -164,41 +212,25 @@ Select USER_NAME ,
 	   IS_RESTRICTED
 from "SYS"."USERS" WHERE USER_DEACTIVATED='TRUE';
 
+ALTER USER <A_LOCKED_USER> RESET CONNECT ATTEMPTS;
 ALTER USER SYSTEM ACTIVATE USER NOW;  
+ALTER USER <user> ACTIVATE USER NOW; 
 
-DROP USER BACKUP_USER CASCADE;
-CREATE USER BACKUP_USER PASSWORD Wedv84u$ NO FORCE_FIRST_PASSWORD_CHANGE;
+DROP USER <backup_user> CASCADE;
+CREATE USER <backup_user> PASSWORD <password> NO FORCE_FIRST_PASSWORD_CHANGE;
 COMMIT;
-GRANT BACKUP ADMIN, DATABASE BACKUP ADMIN, DATABASE RECOVERY OPERATOR, CATALOG READ, INIFILE ADMIN, DATABASE START, DATABASE STOP, TRACE ADMIN, SERVICE ADMIN TO BACKUP_USER
-GRANT BACKUP ADMIN, DATABASE BACKUP ADMIN, CATALOG READ, INIFILE ADMIN TO BACKUP_USER;
+GRANT BACKUP ADMIN, DATABASE BACKUP ADMIN, DATABASE RECOVERY OPERATOR, CATALOG READ, INIFILE ADMIN, DATABASE START, DATABASE STOP, TRACE ADMIN, SERVICE ADMIN TO <backup_user>
+GRANT BACKUP ADMIN, DATABASE BACKUP ADMIN, CATALOG READ, INIFILE ADMIN TO <backup_user>;
+```
 
+#####  STOP & Drop Databases:
+
+```sql
 -- DROP TENANT DATABASE
-ALTER SYSTEM STOP DATABASE HDP
-DROP DATABASE HDP
+ALTER SYSTEM STOP DATABASE <SID>
+DROP DATABASE <SID>
 
-#Reset the SYSTEM User Password of a Tenant Database
-ALTER SYSTEM STOP DATABASE <database_name>
-ALTER DATABASE <database_name> SYSTEM USER PASSWORD <new_password>
-
-ALTER USER <targe user> PASSWORD <new_password>;
-ALTER USER <username> disable password lifetime;
-
-#Reset the SYSTEM User Password of the System Database
-/usr/sap/<SID>/HDB<instance>/hdbenv.sh
-/usr/sap/<SID>/HDB<instance>/exe/hdbnameserver -resetUserSystem
-
-ALTER USER SAPGRC PASSWORD D$n314Zz$GRX;
-ALTER USER SAPGRC disable password lifetime;
-
-
-hdbsql -i 00 -u SAPNW -p D$n314Zz$NWD -n sapvhsmxdb:30044
-hdbsql -i 00 -u SAPNFB -p D$n314Zz$NFB -n sapvhsmddb:30053
-
-hdbsql -i 00 -u SAPNW -p D$n314Zz$NWD -n sapvhsmxdb:30044
-hdbsql -i 00 -u SAPNFB -p D$n314Zz$NFB -n sapvhsmxdb:30047
-
-
-ALTER DATABASE SJX SYSTEM USER PASSWORD Wedv84u$
-ALTER USER SYSTEM disable password lifetime;
+ALTER SYSTEM STOP DATABASE <database_name> [ IMMEDIATE [ WITH COREFILE ] ]
+DROP DATABASE <database_name> [ DROP BACKUPS ]
 ```
 
