@@ -69,12 +69,9 @@ $pwd = [System.Web.Security.Membership]::GeneratePassword($length, $nonAlphaChar
 $InsTime = "{0:yyyy-MM-dd HH:mm:ss}" -f (get-date)
 
 
-
 $string = "asdfadfnglkaslkngalkfnk2342419!1342@sadfadsfad?123412341adfafa"
 $array = $string -split '' | Where-Object {$_ -ne ''}
 Get-Random -InputObject $array -Minimum 8 -Maximum 8 -Count 10
-
-
 
 SELECT DESTINATION_PATH 
 FROM M_BACKUP_CATALOG_FILES 
