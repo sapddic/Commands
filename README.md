@@ -5,6 +5,7 @@
 ```
 <details>
 <summary>Video: Basic Linux Commands (CLI - Part 2)</summary>
+
 <br />
 
 General Operations:
@@ -59,6 +60,8 @@ Execute commands as superuser
 - `sudo [some command]` = Allows regular users to run programs with the security privileges of the superuser or root
 - `su - admin` = Switch from nana user to admin
 </details>
+
+
 
 ```
 
