@@ -2,7 +2,6 @@
 
 
 
-```
 <details>
 <summary>Video: Basic Linux Commands (CLI - Part 2)</summary>
 
@@ -49,7 +48,7 @@ Some more useful commands
 - `cat [filename]` = Display the file content
 - `cat .bash_history` = Example 1: Display the file content
 - `cat Documents/java-app/Readme.md` = Example 2: Display the file content
- 
+
 Display OS Information
 - `uname -a` = Show system and kernel
 - `cat /etc/os-release` =  Show OS information
@@ -62,22 +61,11 @@ Execute commands as superuser
 </details>
 
 
+<details open>
 
-```
+<summary> Already open... </summary>
 
-******
+<p>...</p>
 
+</details>  
 
-
-```
-# A collapsible section with markdown
-<details>
-  <summary>Click to expand!</summary>
-  
-  ## Heading
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
-```
