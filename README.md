@@ -60,16 +60,9 @@ Execute commands as superuser
 - `su - admin` = Switch from nana user to admin
 </details>
 
+<details>
+<summary>Summary lines are collapsible:</summary>
+Hiding the details until expanded.
+</details>
 
-<details open>
-
-<summary> Already open... </summary>
-
-<br />
-
-<p>...</p>
-<p>2</p>
-<p>3</p>
-
-</details>  
 
