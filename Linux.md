@@ -74,6 +74,6 @@ mkdir -p /backup/DONTDELETE_LOG_BACKUP
 mkdir -p /backup/DB13_BACKUP
 
 configure nfsclient 
-
+yast2 nfs &
 
 ```
