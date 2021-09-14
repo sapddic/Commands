@@ -12,5 +12,5 @@
 
 
 
-[https://launchpad.support.sap.com/#/notes/2351294]: **2351294** - S/4HANA System Conversion / Upgrade: Measures to reduce technical downtime
+[2351294 - S/4HANA System Conversion / Upgrade: Measures to reduce technical downtime]: https://launchpad.support.sap.com/#/notes/2351294
 
