@@ -10,8 +10,6 @@
 
 
 
-
-
 [2351294 - S/4HANA System Conversion / Upgrade: Measures to reduce technical downtime](https://launchpad.support.sap.com/#/notes/2351294)
 
 - As of S/4HANA 1709, many of the data conversion methods are using a common parallelization framework. Therefore, the configuration has also been harmonized for all data conversion methods using parallel tasks. The configuration is stored in table SHDB_PFW_CONF and can be preset / adjusted via transaction SE16 or an SQL command line. A suitable point in time to perform this configuration is just before entering the technical downtime, e.g. when SUM reaches phase CHECK4NOTES_TOOL_SHD2
