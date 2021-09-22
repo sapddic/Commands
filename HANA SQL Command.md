@@ -235,3 +235,11 @@ DROP DATABASE <database_name> [ DROP BACKUPS ]
 
 ```
 
+
+
+AUTO MERGE
+
+CON
+
+
+

@@ -4,7 +4,15 @@
 
 
 
-<img src="TMS.assets/image-20210826160009131.png" alt="image-20210826160009131" style="zoom:20%;" />
+
+
+![image-20210920193441366](TMS.assets/image-20210920193441366.png)
+
+
+
+![image-20210921121016063](TMS.assets/image-20210921121016063.png)
+
+
 
 
 
@@ -17,6 +25,3 @@
 | DIR_EPS_ROOT | \sapvhtphost\SAPTRANS\EC\trans |           |                                |
 | TRANSDIR     | \sapvhtphost\SAPTRANS\EC\trans |           |                                |
 
-
-
-![image-20210920193441366](TMS.assets/image-20210920193441366.png)
